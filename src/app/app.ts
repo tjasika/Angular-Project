@@ -1,12 +1,20 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Api } from './services/api';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('angularApp');
+export class AppComponent implements OnInit {
+  constructor(private api: Api) {}
+
+  ngOnInit() {
+    this.api.getToken().subscribe({
+      next: (response) => console.log('Token received!', response),
+      error: (err) => console.error('Auth failed:', err)
+    });
+  }
 }
