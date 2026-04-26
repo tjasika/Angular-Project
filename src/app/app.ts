@@ -13,7 +13,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.api.getToken().subscribe({
-      next: (response) => console.log('Token received!', response),
+      next: () => {
+        this.api.fetchData('api/v1/Users').subscribe({
+          next: (data) => console.log('Data received!', data),
+          error: (err) => console.error('Request failed:', err)
+        });
+      },
       error: (err) => console.error('Auth failed:', err)
     });
   }
