@@ -1,7 +1,9 @@
-<h1 class="text-2xl font-bold">Users page</h1>
+<h1 class="text-2xl font-bold">Users</h1>
 
-<div>
-    @for(user of users; track user.Id) {
-        <li class="text-red-500">{{user.FirstName}}</li>
-    }
-</div>
+@if (isLoading) {
+  <p>Loading...</p>
+} @else {
+  @for(user of users; track user.Id) {
+    <li>{{user.FirstName}} {{user.LastName}}</li>
+  }
+}
