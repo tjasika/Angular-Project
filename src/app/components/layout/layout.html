@@ -1,17 +1,73 @@
 <div class="flex flex-col h-screen">
   <!-- Header -->
-  <header class="bg-gray-50 shadow p-7">
+  <header class="bg-gray-50 shadow p-7 flex flex-row gap-4">
+    <span class="material-symbols-outlined text-primary font-5xl">
+        school
+    </span>
+
     <h1 class="text-xl text-accent-dark font-bold">Tjaša's App</h1>
   </header>
 
   <div class="flex flex-1 overflow-hidden">
     <!-- Sidebar -->
     <nav class="bg-gray-50 w-48 p-4 flex flex-col gap-4">
-        <a routerLink="/users" class="p-2" routerLinkActive="font-bold text-primary border-l-4">Users</a>
-        <a routerLink="/absences" class="p-2" routerLinkActive="font-bold text-primary border-l-4">Absences</a>
-        <a routerLink="/settings" class="p-2" routerLinkActive="font-bold text-primary border-l-4">Settings</a>
-    </nav>
+        
+        <div 
+            routerLink="/users" 
+            routerLinkActive="border-primary" 
+            class="flex flex-row gap-1 border-l-4 border-transparent items-center pl-2 cursor-pointer"
+            #rlaUsers="routerLinkActive">
+            <span 
+            class="material-symbols-outlined" 
+            [class.text-primary]="rlaUsers.isActive">
+            group
+            </span>
+            <a 
+            routerLink="/users" 
+            class="p-2" 
+            routerLinkActive="font-bold text-primary">
+            Users
+            </a>
+        </div>
 
+        <div 
+            routerLink="/absences" 
+            routerLinkActive="border-primary" 
+            class="flex flex-row gap-1 border-l-4 border-transparent items-center pl-2 cursor-pointer"
+            #rlaAbsences="routerLinkActive">
+            <span 
+            class="material-symbols-outlined" 
+            [class.text-primary]="rlaAbsences.isActive">
+            account_circle_off
+            </span>
+            <a 
+            routerLink="/absences" 
+            class="p-2" 
+            routerLinkActive="font-bold text-primary">
+            Absences
+            </a>
+        </div>
+
+        <div 
+            routerLink="/settings" 
+            routerLinkActive="border-primary" 
+            class="flex flex-row gap-1 border-l-4 border-transparent items-center pl-2 cursor-pointer"
+            #rlaSettings="routerLinkActive">
+            <span 
+            class="material-symbols-outlined" 
+            [class.text-primary]="rlaSettings.isActive">
+            settings
+            </span>
+            <a 
+            routerLink="/settings" 
+            class="p-2" 
+            routerLinkActive="font-bold text-primary">
+            Settings
+            </a>
+        </div>
+
+    </nav>
+    
     <!-- Page content -->
     <main class="flex-1 p-6 overflow-auto">
       <router-outlet />

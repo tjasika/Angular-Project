@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+@import 'material-symbols';
 
 @theme {
   --color-primary: #95B1EE;
@@ -8,4 +9,12 @@
   --color-accent: #E7F1AB;
     --color-accent-dark: #333333;
   --color-background: #FFFDF5;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
 }
