@@ -1,3 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+@theme {
+  --color-primary: #95B1EE;
+  --color-secondary: #95B1EE;
+  --color-accent: #E7F1AB;
+    --color-accent-dark: #333333;
+  --color-background: #FFFDF5;
+}
