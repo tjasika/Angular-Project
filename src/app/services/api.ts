@@ -8,11 +8,11 @@ import { tap } from 'rxjs/operators';
 })
 export class Api {
   private accessToken = '';
+  private tokenReady = false;
  
   constructor(private http: HttpClient) {}
 
-  getToken() {
-    const clientId = localStorage.getItem('clientId') || '';
+  getToken() {    const clientId = localStorage.getItem('clientId') || '';
     const clientSecret = localStorage.getItem('clientSecret') || '';
     const tokenUrl = localStorage.getItem('tokenUrl') || '';
     const baseUrl = localStorage.getItem('baseUrl') || '';
@@ -26,7 +26,10 @@ export class Api {
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
     return this.http.post<any>(tokenUrl, body.toString(), { headers }).pipe(
-      tap(response => this.accessToken = response.access_token)
+      tap(response => {
+        this.accessToken = response.access_token;
+        this.tokenReady = true;
+      })
     );
   }
 
