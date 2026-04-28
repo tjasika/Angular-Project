@@ -31,13 +31,21 @@
           <table class="w-full border-collapse rounded-xl">
           <thead>
             <tr class="bg-secondary text-left h-10">
-              <th class="p-3 rounded-tl-lg">Full Name</th>
+              <th class="p-3 rounded-tl-lg cursor-pointer" (click)="toggleSort('FullName')">
+                <div class="flex flex-row justify-between items-center">
+                  Full Name
+                  <span class="material-symbols-outlined text-sm">
+                    {{ sortField === 'FullName' && sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                  </span>
+                </div>
+              </th>
               <th class="p-3 flex justify-between items-center">
                 First Name
-                <div>A-Z</div>
               </th>
-              <th class="p-3">Last Name</th>
-              <th class="p-3 rounded-tr-lg">Birth Date</th>
+              <th class="p-3">
+                Last Name
+              </th>
+              <th class="p-3 rounded-tr-lg">Absences</th>
             </tr>
           </thead>
           <tbody>
@@ -46,7 +54,7 @@
                 <td class="p-3 font-bold">{{user.FullName}}</td>
                 <td class="p-3">{{user.FirstName + ' ' + user.MiddleName}}</td>
                 <td class="p-3">{{user.LastName}}</td>
-                <td class="p-3">{{user.BirthDate}}</td>
+                <td class="p-3">absences go here</td>
               </tr>
             }
           </tbody>

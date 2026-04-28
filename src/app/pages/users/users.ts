@@ -13,6 +13,8 @@ export class Users implements OnInit {
   isLoading = true;
   searchQuery = '';
   activeView: 'all' | 'add' | 'absences' = 'all';
+  sortField = 'FirstName';
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   constructor(private api: Api,private cdr: ChangeDetectorRef) {}
 
@@ -37,11 +39,28 @@ export class Users implements OnInit {
     });
   }
 
+  toggleSort(field: string) {
+      if(this.sortField === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = field;
+      this.sortDirection = 'asc';
+    }
+  }
+
   get filteredUsers() {
-    return this.users.filter(user => 
+  return this.users
+    .filter(user => 
       user.FirstName?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
       user.LastName?.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
-  }
+    )
+    .sort((a, b) => {
+      const valA = a[this.sortField] || '';
+      const valB = b[this.sortField] || '';
+      return this.sortDirection === 'asc' 
+        ? valA.localeCompare(valB) 
+        : valB.localeCompare(valA);
+    });
+}
 
 }
