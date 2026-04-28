@@ -3,7 +3,26 @@
 @if (isLoading) {
   <p>Loading...</p>
 } @else {
-  @for(user of users; track user.Id) {
-    <li>{{user.FirstName}} {{user.LastName}}</li>
-  }
+  <div class="pt-7">
+    <table class="w-full border-collapse rounded-xl">
+    <thead>
+      <tr class="bg-secondary text-left h-10">
+        <th class="p-3 rounded-tl-lg">Full Name</th>
+        <th class="p-3">First Name</th>
+        <th class="p-3">Last Name</th>
+        <th class="p-3 rounded-tr-lg">Birth Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(user of users; track $index) {
+        <tr class="border-b border-gray-200 hover:bg-gray-50 h-10 text-gray-500">
+          <td class="p-3 font-bold">{{user.FullName}}</td>
+          <td class="p-3">{{user.FirstName + ' ' + user.MiddleName}}</td>
+          <td class="p-3">{{user.LastName}}</td>
+          <td class="p-3">{{user.BirthDate}}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
 }
