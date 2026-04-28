@@ -12,6 +12,7 @@ export class Users implements OnInit {
   users: any[] = []
   isLoading = true;
   searchQuery = '';
+  activeView: 'all' | 'add' | 'absences' = 'all';
 
   constructor(private api: Api,private cdr: ChangeDetectorRef) {}
 
