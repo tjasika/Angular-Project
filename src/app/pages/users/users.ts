@@ -1,15 +1,17 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Api } from '../../services/api';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './users.html',
   styleUrl: './users.css',
 })
 export class Users implements OnInit {
   users: any[] = []
   isLoading = true;
+  searchQuery = '';
 
   constructor(private api: Api,private cdr: ChangeDetectorRef) {}
 
@@ -32,6 +34,13 @@ export class Users implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  get filteredUsers() {
+    return this.users.filter(user => 
+      user.FirstName?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      user.LastName?.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
   }
 
 }

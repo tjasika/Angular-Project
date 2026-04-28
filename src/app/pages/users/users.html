@@ -3,6 +3,9 @@
 @if (isLoading) {
   <p>Loading...</p>
 } @else {
+  <div>
+    <input [(ngModel)]="searchQuery" name="searchQuery" placeholder="Search" class="border p-2 mb-4 w-full" />
+  </div>
   <div class="pt-7">
     <table class="w-full border-collapse rounded-xl">
     <thead>
@@ -14,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      @for(user of users; track $index) {
+      @for(user of filteredUsers; track $index) {
         <tr class="border-b border-gray-200 hover:bg-gray-50 h-10 text-gray-500">
           <td class="p-3 font-bold">{{user.FullName}}</td>
           <td class="p-3">{{user.FirstName + ' ' + user.MiddleName}}</td>
