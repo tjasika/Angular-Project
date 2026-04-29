@@ -1,10 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Api } from '../../services/api';
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-users',
-  imports: [FormsModule],
+  imports: [FormsModule, DatePipe],
   templateUrl: './users.html',
   styleUrl: './users.css',
 })
@@ -99,6 +101,15 @@ export class Users implements OnInit {
     return this.isExpanded(userId) ? absences : absences.slice(0, 4);
   }
 
-  
+  //for absence details modal
+  selectedAbsence: any = null;
+
+  openAbsence(absence: any) {
+    this.selectedAbsence = absence;
+  }
+
+  closeAbsence() {
+    this.selectedAbsence = null;
+  }
 
 }
