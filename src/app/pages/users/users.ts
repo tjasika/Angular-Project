@@ -96,7 +96,8 @@ export class Users implements OnInit {
   newAbsence = {
     UserId: '',
     AbsenceDefinitionId: '',
-    Timestamp: '',
+    PartialTimeFrom: '',
+    PartialTimeTo: '',
     IsPartial: false
   }
 

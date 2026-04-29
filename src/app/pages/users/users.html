@@ -148,13 +148,24 @@
       </div>
 
       <form>
-        <select [(ngModel)]="newAbsence.AbsenceDefinitionId" name="AbsenceDefinitionId" class="border p-2 mb-4 w-full rounded-lg">
+        <select [(ngModel)]="newAbsence.AbsenceDefinitionId" name="AbsenceDefinitionId" class="w-full px-4 py-2 mb-4 bg-white border border-gray-300 rounded-lg shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer appearance-none">
           <option value="">Select absence type</option>
           @for(def of absenceDefinitions; track $index) {
             <option [value]="def.Id">{{def.Name}}</option>
           }
         </select>
-        <input [(ngModel)]="newAbsence.Timestamp" name="Timestamp" type="date" class="border p-2 mb-4 w-full rounded-lg"/>
+
+        <div class="flex flex-col gap-3">
+          <div class="flex flex-row items-center gap-5 pl-3">
+            <label class="block text-gray-500 text-md w-1/2" for="PartialTimeFrom">Start date: </label>
+            <input [(ngModel)]="newAbsence.PartialTimeFrom" type="date" name="PartialTimeFrom" class="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"/>
+          </div>
+          <div class="flex flex-row items-center gap-5 pl-3">
+            <label class="block text-gray-500 text-md w-1/2" for="PartialTimeTo">End date: </label>
+            <input [(ngModel)]="newAbsence.PartialTimeTo" type="date" name="PartialTimeTo" class="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"/>
+          </div>
+        </div>
+        
         <button type="button" class="mt-4 bg-primary text-white px-4 py-2 rounded-lg w-full hover:bg-secondary hover:cursor-pointer" (click)="addAbsence()">Add absence</button>
       </form>
 
