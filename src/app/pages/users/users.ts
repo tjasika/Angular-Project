@@ -18,8 +18,8 @@ export class Users implements OnInit {
 
   constructor(private api: Api,private cdr: ChangeDetectorRef) {}
 
+  //fetch data
   ngOnInit() {
-
     this.api.getToken().subscribe({
       next: () => {
         this.api.fetchData('api/v1/Users').subscribe({
@@ -44,15 +44,16 @@ export class Users implements OnInit {
         console.error('Token failed:', err)
         this.isLoading = false;
       }
-      
     });
 
   }
 
+  //get absences by user
   getUserAbsences(userId: string) {
     return this.absences.filter(a => a.UserId === userId);
   }
 
+  //sort users alphabetically
   toggleSort(field: string) {
       if(this.sortField === field) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -62,6 +63,7 @@ export class Users implements OnInit {
     }
   }
 
+  //filter users by name
   get filteredUsers() {
     return this.users
       .filter(user => 
@@ -77,6 +79,7 @@ export class Users implements OnInit {
       });
   }
 
+  //manage absences view
   expandedUsers = new Set<string>();
 
   toggleExpand(userId: string) {
@@ -95,5 +98,7 @@ export class Users implements OnInit {
     const absences = this.getUserAbsences(userId);
     return this.isExpanded(userId) ? absences : absences.slice(0, 4);
   }
+
+  
 
 }
