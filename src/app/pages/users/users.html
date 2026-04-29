@@ -42,28 +42,29 @@
       </thead>
       <tbody>
         @for(user of filteredUsers; track $index) {
-          <tr class="border-b border-gray-200 hover:bg-gray-50 h-10 text-gray-500">
-            <td class="p-3">{{user.MiddleName ? user.FirstName + ' ' + user.MiddleName : user.FirstName}}</td>
+          <tr class="border-b border-gray-200 hover:bg-gray-50 h-10 text-gray-500 cursor-pointer">
+            <td (click)="openUserDetails(user)" class="p-3">{{user.MiddleName ? user.FirstName + ' ' + user.MiddleName : user.FirstName}}</td>
 
-            <td class="p-3">{{user.LastName}}</td>
+            <td (click)="openUserDetails(user)" class="p-3">{{user.LastName}}</td>
 
             <td class="p-3 flex justify-between">
-              @for(absence of getVisibleAbsences(user.Id); track $index) {
-                <span class="flex justify-center items-center bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs mr-1 hover:cursor-pointer hover:bg-secondary" (click)="openAbsence(absence)">
-                  {{absence.AbsenceDefinitionName}}
-                </span>
-              }
-              @if(getUserAbsences(user.Id).length > 4) {
-                <span 
-                  (click)="toggleExpand(user.Id)" 
-                  class="bg-gray-200 text-gray-600 px-2 py-1 rounded-full text-xs cursor-pointer hover:bg-gray-300">
-                  {{ isExpanded(user.Id) ? 'Show less' : '...' }}
-                </span>
-              } @else if(getUserAbsences(user.Id).length == 0) {
-                <span></span>
-              }
-              <button (click)="openAddAbsence(user.Id)" 
-                  class="text-xs border-primary border-2 bg-gray-50 px-3 py-2 rounded-lg hover:cursor-pointer hover:bg-primary hover:text-white">
+              <div class="flex flex-wrap gap-1 mb-2">
+                @for(absence of getVisibleAbsences(user.Id); track $index) {
+                  <span class="flex justify-center items-center bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs mr-1 hover:cursor-pointer hover:bg-secondary" (click)="openAbsence(absence)">
+                    {{absence.AbsenceDefinitionName}}
+                  </span>
+                }
+                @if(getUserAbsences(user.Id).length > 4) {
+                  <span 
+                    (click)="toggleExpand(user.Id)" 
+                    class="bg-gray-200 text-gray-600 px-2 py-1 rounded-full text-xs cursor-pointer hover:bg-gray-300">
+                    {{ isExpanded(user.Id) ? 'Show less' : '...' }}
+                  </span>
+                } @else if(getUserAbsences(user.Id).length == 0) {
+                  <span></span>
+                }
+              </div>
+              <button (click)="openAddAbsence(user.Id)" class="text-xs border-primary border-2 bg-gray-50 max-h-10 min-w-30 px-3 py-2 rounded-lg hover:cursor-pointer hover:bg-primary hover:text-white">
                   Add absence
               </button>
             </td>
@@ -108,7 +109,12 @@
   <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
     <div class="bg-white rounded-xl p-6 w-96 shadow-xl" (click)="$event.stopPropagation()">
 
-      <h2 class="text-xl font-bold mb-4">Add user</h2>
+      <div class="flex flex-row justify-between">
+        <h2 class="text-xl font-bold mb-4">Add new user</h2>
+        <span class="material-symbols-outlined cursor-pointer" (click)="closeAddUser()">
+          close
+        </span>
+      </div>
 
       <form>
         <input [(ngModel)]="newUser.FirstName" name="FirstName" placeholder="First Name" class="border p-2 mb-4 w-full"/>
@@ -118,10 +124,6 @@
         <button type="button" (click)="addUser()">Add user</button>
       </form>
 
-      <button (click)="closeAddUser()" class="mt-4 bg-primary text-white px-4 py-2 rounded-lg w-full hover:bg-secondary hover:cursor-pointer">
-        Close
-      </button>
-
     </div>
   </div>
 }
@@ -130,7 +132,12 @@
   <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
     <div class="bg-white rounded-xl p-6 w-96 shadow-xl" (click)="$event.stopPropagation()">
 
-      <h2 class="text-xl font-bold mb-4">Add absence</h2>
+      <div class="flex flex-row justify-between">
+        <h2 class="text-xl font-bold mb-4">Add absence for <span class="text-primary">{{selectedUser?.FirstName}} {{selectedUser?.LastName}}</span></h2>
+        <span class="material-symbols-outlined cursor-pointer" (click)="closeAddAbsence()">
+          close
+        </span>
+      </div>
 
       <form>
         <select [(ngModel)]="newAbsence.AbsenceDefinitionId" name="AbsenceDefinitionId" class="border p-2 mb-4 w-full rounded-lg">
@@ -140,10 +147,25 @@
           }
         </select>
         <input [(ngModel)]="newAbsence.Timestamp" name="Timestamp" type="date" class="border p-2 mb-4 w-full rounded-lg"/>
-        <button type="button" (click)="addAbsence()">Add absence</button>
+        <button type="button" class="mt-4 bg-primary text-white px-4 py-2 rounded-lg w-full hover:bg-secondary hover:cursor-pointer" (click)="addAbsence()">Add absence</button>
       </form>
 
-      <button (click)="closeAddAbsence()" class="mt-4 bg-primary text-white px-4 py-2 rounded-lg w-full hover:bg-secondary hover:cursor-pointer">
+    </div>
+  </div>
+}
+
+@if (showUserDetails) {
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-96 shadow-xl" (click)="$event.stopPropagation()">
+
+      <div class="flex flex-row justify-between">
+        <h2 class="text-xl font-bold mb-4">{{selectedUser?.FirstName}} {{selectedUser?.LastName}}</h2>
+        <span class="material-symbols-outlined cursor-pointer" (click)="closeUserDetails()">
+          close
+        </span>
+      </div>
+    
+      <button (click)="closeUserDetails()" class="mt-4 bg-primary text-white px-4 py-2 rounded-lg w-full hover:bg-secondary hover:cursor-pointer">
         Close
       </button>
 
