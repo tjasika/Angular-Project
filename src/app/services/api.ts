@@ -40,4 +40,13 @@ export class Api {
     });
     return this.http.get<any>(`${baseUrl}/${endpoint}`, { headers });
   }
+
+  postData(endpoint: string, body: any) {
+    const baseUrl = localStorage.getItem('baseUrl') || '';
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.accessToken}`,
+      'Content-Type': 'application/json'
+    })
+    return this.http.post<any>(`${baseUrl}/${endpoint}`, body, { headers });
+  }
 }

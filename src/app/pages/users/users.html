@@ -100,7 +100,16 @@
 
       <h2 class="text-xl font-bold mb-4">Add user</h2>
 
-      
+      <form>
+        <input [(ngModel)]="newUser.FirstName" name="FirstName" placeholder="First Name" class="border p-2 mb-4 w-full"/>
+        <input [(ngModel)]="newUser.LastName" name="LastName" placeholder="Last Name" class="border p-2 mb-4 w-full"/>
+        <input [(ngModel)]="newUser.Email" name="Email" placeholder="Email" class="border p-2 mb-4 w-full"/>
+        <input [(ngModel)]="newUser.BirthDate" type="date" name="BirthDate" placeholder="Date of birth"/>
+
+
+        <button type="button" (click)="addUser()">Add user</button>
+      </form>
+
       <button (click)="closeAddUser()" class="mt-4 bg-primary text-white px-4 py-2 rounded-lg w-full hover:bg-secondary hover:cursor-pointer">
         Close
       </button>

@@ -50,6 +50,26 @@ export class Users implements OnInit {
 
   }
 
+  //add new user
+  newUser = {
+    FirstName : '',
+    LastName : '',
+    Email : '',
+    BirthDate : ''
+  }
+
+  addUser() {
+    this.api.postData('api/v1/Users', this.newUser).subscribe({
+      next: (data) => {
+        console.log('User added successfully!', data);
+        this.closeAddUser();
+      },
+      error: (err) => console.error('Error addind user:', err)
+    });
+  }
+
+
+
   //get absences by user
   getUserAbsences(userId: string) {
     return this.absences.filter(a => a.UserId === userId);
