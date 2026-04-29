@@ -7,7 +7,9 @@
     <input [(ngModel)]="searchQuery" name="searchQuery" placeholder="Search" class="border border-gray-500 p-2 mb-4 w-full rounded-lg" />
   </div>
   <div>
-    <button class="bg-primary text-white px-4 py-2 rounded-lg mr-2 hover:bg-secondary hover:cursor-pointer">Add User</button>
+    <button class="bg-primary text-white px-4 py-2 rounded-lg mr-2 hover:bg-secondary hover:cursor-pointer" (click)="openAddUser()">
+      Add User
+    </button>
   </div>
   <div class="pt-4">
       <table class="w-full border-collapse rounded-xl">
@@ -64,7 +66,6 @@
 </div>
 
 @if (selectedAbsence) {
-  @if (selectedAbsence) {
   <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" (click)="closeAbsence()">
     <div class="bg-white rounded-xl p-6 w-96 shadow-xl" (click)="$event.stopPropagation()">
 
@@ -93,7 +94,19 @@
   </div>
 }
 
-}
+@if(showAddUser) {
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-96 shadow-xl" (click)="$event.stopPropagation()">
 
+      <h2 class="text-xl font-bold mb-4">Add user</h2>
+
+      
+      <button (click)="closeAddUser()" class="mt-4 bg-primary text-white px-4 py-2 rounded-lg w-full hover:bg-secondary hover:cursor-pointer">
+        Close
+      </button>
+
+    </div>
+  </div>
+}
 
 }

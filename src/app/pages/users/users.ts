@@ -101,7 +101,7 @@ export class Users implements OnInit {
     return this.isExpanded(userId) ? absences : absences.slice(0, 4);
   }
 
-  //for absence details modal
+  //absence details modal
   selectedAbsence: any = null;
 
   openAbsence(absence: any) {
@@ -110,6 +110,15 @@ export class Users implements OnInit {
 
   closeAbsence() {
     this.selectedAbsence = null;
+  }
+
+  //add user modal
+  showAddUser = false;
+  openAddUser() {
+    this.showAddUser = true;
+  }
+  closeAddUser() {
+    this.showAddUser = false;
   }
 
 }
