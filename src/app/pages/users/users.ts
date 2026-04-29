@@ -22,6 +22,22 @@ export class Users implements OnInit {
 
   constructor(private api: Api,private cdr: ChangeDetectorRef) {}
 
+  newUser = {
+    FirstName : '',
+    LastName : '',
+    Email : '',
+    BirthDate : ''
+  }
+
+  newAbsence = {
+    UserId: '',
+    AbsenceDefinitionId: '',
+    PartialTimeFrom: '',
+    PartialTimeTo: '',
+    timestamp: new Date().toISOString(),
+    IsPartial: false
+  }
+
   //fetch data
   ngOnInit() {
     this.api.getToken().subscribe({
@@ -56,21 +72,26 @@ export class Users implements OnInit {
 
   }
 
-  //add new user
-  newUser = {
-    FirstName : '',
-    LastName : '',
-    Email : '',
-    BirthDate : ''
-  }
-
   addUser() {
-    this.api.postData('api/v1/Users', this.newUser).subscribe({
+    this.api.addUser(this.newUser).subscribe({
       next: (data) => {
         console.log('User added successfully!', data);
         this.closeAddUser();
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error addind user:', err)
+    });
+  }
+
+  addAbsence() {
+    this.api.addAbsence(this.newAbsence).subscribe({
+      next: (data) => {
+        console.log('Absence added!', data);
+        this.closeAddAbsence();
+        this.cdr.detectChanges();
+        alert('Absence added successfully!');
+      },
+      error: (err) => console.error('Add absence failed:', err)
     });
   }
 
@@ -87,28 +108,7 @@ export class Users implements OnInit {
   closeAddAbsence() {
     this.showAddAbsence = false;
   }
-
-  //add new absence
-  newAbsence = {
-    UserId: '',
-    AbsenceDefinitionId: '',
-    PartialTimeFrom: '',
-    PartialTimeTo: '',
-    timestamp: new Date().toISOString(),
-    IsPartial: false
-  }
-
-  addAbsence() {
-    this.api.postData('api/v1/Absences', this.newAbsence).subscribe({
-      next: (data) => {
-        console.log('Absence added!', data);
-        this.closeAddAbsence();
-        this.cdr.detectChanges();
-        alert('Absence added successfully!');
-      },
-      error: (err) => console.error('Add absence failed:', err)
-    });
-  }
+  
 
 
   //get absences by user
