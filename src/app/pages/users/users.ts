@@ -9,10 +9,10 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './users.css',
 })
 export class Users implements OnInit {
-  users: any[] = []
+  users: any[] = [];
+  absences: any[] = [];
   isLoading = true;
   searchQuery = '';
-  activeView: 'all' | 'add' | 'absences' = 'all';
   sortField = 'FirstName';
   sortDirection: 'asc' | 'desc' = 'asc';
 
@@ -23,20 +23,34 @@ export class Users implements OnInit {
     this.api.getToken().subscribe({
       next: () => {
         this.api.fetchData('api/v1/Users').subscribe({
-          next: (data) => {
-            console.log('fetch next fired', data);
-            this.users = data;
-            this.isLoading = false;
-            this.cdr.detectChanges();
-          },
-          error: (err) => console.error('Request failed:', err)
-        });
-      },
+        next: (data) => {
+          this.users = data;
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Users failed:', err)
+      });
+
+      this.api.fetchData('api/v1/Absences').subscribe({
+        next: (data) => {
+          this.absences = data;
+          console.log(this.absences);
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Absences failed:', err)
+      });
+    },
       error: (err) => {
         console.error('Token failed:', err)
         this.isLoading = false;
       }
+      
     });
+
+  }
+  
+  getUserAbsences(userId: string) {
+    return this.absences.filter(a => a.UserId === userId);
   }
 
   toggleSort(field: string) {

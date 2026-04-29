@@ -3,68 +3,51 @@
 @if (isLoading) {
   <p>Loading...</p>
 } @else {
-  <div>
-    <input [(ngModel)]="searchQuery" name="searchQuery" placeholder="Search" class="border p-2 mb-4 w-full" />
-    <div class="flex flex-row gap-5">
-      <button (click)="activeView = 'all'" 
-        [class.text-primary]="activeView === 'all'"
-        [class.font-bold]="activeView === 'all'"
-        [class.border-b-2]="activeView === 'all'"
-        class="text-gray-500 hover:text-gray-700 cursor-pointer">All users
-      </button>
-       <button (click)="activeView = 'add'" 
-        [class.text-primary]="activeView === 'add'"
-        [class.font-bold]="activeView === 'add'"
-        [class.border-b-2]="activeView === 'add'"
-        class="text-gray-500 hover:text-gray-700 cursor-pointer">Add user
-      </button>
-       <button (click)="activeView = 'absences'" 
-        [class.text-primary]="activeView === 'absences'"
-        [class.font-bold]="activeView === 'absences'"
-        [class.border-b-2]="activeView === 'absences'"
-        class="text-gray-500 hover:text-gray-700 cursor-pointer">Absences
-      </button>
-    </div>  
-  </div>
   <div class="pt-7">
-    @if (activeView === 'all') {
-          <table class="w-full border-collapse rounded-xl">
-          <thead>
-            <tr class="bg-secondary text-left h-10">
-              <th class="p-3 rounded-tl-lg cursor-pointer" (click)="toggleSort('FirstName')">
-                <div class="flex flex-row justify-between items-center">
-                  First Name
-                  <span class="material-symbols-outlined text-sm">
-                    {{ sortField === 'FirstName' && sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                  </span>
-                </div>
-              </th>
-              <th class="p-3 cursor-pointer" (click)="toggleSort('LastName')">
-                <div class="flex flex-row justify-between items-center">
-                  Last Name
-                  <span class="material-symbols-outlined text-sm">
-                    {{ sortField === 'LastName' && sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                  </span>
-                </div>
-              </th>
-              <th class="p-3 rounded-tr-lg cursor-pointer">Absences</th>
+    <input [(ngModel)]="searchQuery" name="searchQuery" placeholder="Search" class="border border-gray-500 p-2 mb-4 w-full rounded-lg" />
+  </div>
+  <div>
+    <button class="bg-secondary text-white px-4 py-2 rounded-lg mr-2 hover:bg-primary hover:cursor-pointer">Add User</button>
+  </div>
+  <div class="pt-4">
+      <table class="w-full border-collapse rounded-xl">
+      <thead>
+        <tr class="bg-secondary text-left h-10">
+          <th class="p-3 rounded-tl-lg cursor-pointer" (click)="toggleSort('FirstName')">
+            <div class="flex flex-row justify-between items-center">
+              First Name
+              <span class="material-symbols-outlined text-sm">
+                {{ sortField === 'FirstName' && sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+              </span>
+            </div>
+          </th>
+          <th class="p-3 cursor-pointer" (click)="toggleSort('LastName')">
+            <div class="flex flex-row justify-between items-center">
+              Last Name
+              <span class="material-symbols-outlined text-sm">
+                {{ sortField === 'LastName' && sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+              </span>
+            </div>
+          </th>
+          <th class="p-3 rounded-tr-lg cursor-pointer">Absences</th>
 
-            </tr>
-          </thead>
-          <tbody>
-            @for(user of filteredUsers; track $index) {
-              <tr class="border-b border-gray-200 hover:bg-gray-50 h-10 text-gray-500">
-                <td class="p-3">{{user.MiddleName ? user.FirstName + ' ' + user.MiddleName : user.FirstName}}</td>
-                <td class="p-3">{{user.LastName}}</td>
-                <td class="p-3">absences go here</td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      } @else if (activeView === 'add') {
-        <p>Add user form goes here...</p>
-      } @else if (activeView === 'absences') {
-        <p>Absences view goes here...</p>
-      }
+        </tr>
+      </thead>
+      <tbody>
+        @for(user of filteredUsers; track $index) {
+          <tr class="border-b border-gray-200 hover:bg-gray-50 h-10 text-gray-500">
+            <td class="p-3">{{user.MiddleName ? user.FirstName + ' ' + user.MiddleName : user.FirstName}}</td>
+            <td class="p-3">{{user.LastName}}</td>
+            <td class="p-3">
+              @for(absence of getUserAbsences(user.Id); track $index) {
+                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs mr-1">
+                  {{absence.AbsenceDefinitionName}}
+                </span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
 </div>
 }
