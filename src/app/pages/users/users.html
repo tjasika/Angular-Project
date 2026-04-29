@@ -1,19 +1,22 @@
-<h1 class="text-2xl font-bold">Users</h1>
 
 @if (isLoading) {
   <p>Loading...</p>
 } @else {
-  <div class="pt-7">
-    <input [(ngModel)]="searchQuery" name="searchQuery" placeholder="Search" class="border border-gray-500 p-2 mb-4 w-full rounded-lg" />
+<div class="flex flex-col h-full pl-10 pr-10">
+  <div class="flex-shrink-0 bg-white pb-4">
+    <div class="pt-7 pb-3 flex flex-row justify-between">
+      <h1 class="text-2xl font-bold">Users</h1>
+      <button class="bg-primary text-white px-4 py-2 rounded-lg mr-2 hover:bg-secondary hover:cursor-pointer" (click)="openAddUser()">
+        Add User
+      </button>
+    </div>
+    <div>
+      <input [(ngModel)]="searchQuery" name="searchQuery" placeholder="Search" class="border border-gray-500 p-2 mb-4 w-full rounded-lg" />
+    </div>
   </div>
-  <div>
-    <button class="bg-primary text-white px-4 py-2 rounded-lg mr-2 hover:bg-secondary hover:cursor-pointer" (click)="openAddUser()">
-      Add User
-    </button>
-  </div>
-  <div class="pt-4">
-      <table class="w-full border-collapse rounded-xl">
-      <thead>
+  <div class="flex-1 overflow-auto">
+      <table class="w-full border-collapse rounded-xl pb-10">
+      <thead class="sticky top-0 z-10">
         <tr class="bg-secondary text-left h-10">
 
           <th class="p-3 rounded-tl-lg cursor-pointer w-1/4" (click)="toggleSort('FirstName')">
@@ -44,9 +47,9 @@
 
             <td class="p-3">{{user.LastName}}</td>
 
-            <td class="p-3">
+            <td class="p-3 flex justify-between">
               @for(absence of getVisibleAbsences(user.Id); track $index) {
-                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs mr-1 hover:cursor-pointer hover:bg-secondary" (click)="openAbsence(absence)">
+                <span class="flex justify-center items-center bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs mr-1 hover:cursor-pointer hover:bg-secondary" (click)="openAbsence(absence)">
                   {{absence.AbsenceDefinitionName}}
                 </span>
               }
@@ -56,13 +59,12 @@
                   class="bg-gray-200 text-gray-600 px-2 py-1 rounded-full text-xs cursor-pointer hover:bg-gray-300">
                   {{ isExpanded(user.Id) ? 'Show less' : '...' }}
                 </span>
+              } @else if(getUserAbsences(user.Id).length == 0) {
+                <span></span>
               }
-            </td>
-
-            <td class="p-3">
               <button (click)="openAddAbsence(user.Id)" 
-                class="text-xs bg-gray-100 px-2 py-1 rounded-lg hover:bg-primary hover:text-white cursor-pointer">
-                + Absence
+                  class="text-xs border-primary border-2 bg-gray-50 px-3 py-2 rounded-lg hover:cursor-pointer hover:bg-primary hover:text-white">
+                  Add absence
               </button>
             </td>
 
@@ -70,7 +72,8 @@
         }
       </tbody>
     </table>
-</div>
+  </div>
+  </div>
 
 @if (selectedAbsence) {
   <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" (click)="closeAbsence()">
