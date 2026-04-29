@@ -78,6 +78,19 @@ export class Users implements OnInit {
     });
   }
 
+  //add absence modal
+  showAddAbsence = false;
+  selectedUserId = '';
+
+  openAddAbsence(userId: string) {
+    this.selectedUserId = userId;
+    this.newAbsence.UserId = userId;
+    this.showAddAbsence = true;
+  }
+  closeAddAbsence() {
+    this.showAddAbsence = false;
+  }
+
   //add new absence
   newAbsence = {
     UserId: '',
@@ -91,6 +104,8 @@ export class Users implements OnInit {
       next: (data) => {
         console.log('Absence added!', data);
         this.closeAddAbsence();
+        this.cdr.detectChanges();
+        alert('Absence added successfully!');
       },
       error: (err) => console.error('Add absence failed:', err)
     });
@@ -168,18 +183,17 @@ export class Users implements OnInit {
     this.showAddUser = false;
   }
 
+  //user details modal
+  showUserDetails = false;
+  selectedUser: any = null;
 
-  //add absence modal
-  showAddAbsence = false;
-  selectedUserId = '';
-
-  openAddAbsence(userId: string) {
-    this.selectedUserId = userId;
-    this.newAbsence.UserId = userId;
-    this.showAddAbsence = true;
+  openUserDetails(user: any) {
+    this.selectedUser = user;
+    this.showUserDetails = true;
   }
-  closeAddAbsence() {
-    this.showAddAbsence = false;
+
+  closeUserDetails() {
+    this.showUserDetails = false;
   }
 
 
