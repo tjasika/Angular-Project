@@ -68,7 +68,7 @@
                     {{ isExpanded(user.Id) ? 'Show less' : '...' }}
                   </span>
                 } @else if(getUserAbsences(user.Id).length == 0) {
-                  <span></span>
+                  <span> - </span>
                 }
               </div>
               <button (click)="openAddAbsence(user.Id)" class="text-xs border-primary border-2 bg-gray-50 max-h-10 min-w-30 px-3 py-2 rounded-lg hover:cursor-pointer hover:bg-primary hover:text-white">
