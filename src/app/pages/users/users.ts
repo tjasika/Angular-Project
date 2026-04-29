@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Api } from '../../services/api';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { timestamp } from 'rxjs';
 
 
 @Component({
@@ -98,6 +99,7 @@ export class Users implements OnInit {
     AbsenceDefinitionId: '',
     PartialTimeFrom: '',
     PartialTimeTo: '',
+    timestamp: new Date().toISOString(),
     IsPartial: false
   }
 
