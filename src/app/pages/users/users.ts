@@ -84,6 +84,7 @@ export class Users implements OnInit {
 
   openAddAbsence(userId: string) {
     this.selectedUserId = userId;
+    this.selectedUser = this.users.find(u => u.Id === userId);
     this.newAbsence.UserId = userId;
     this.showAddAbsence = true;
   }
@@ -194,6 +195,11 @@ export class Users implements OnInit {
 
   closeUserDetails() {
     this.showUserDetails = false;
+  }
+
+  //refresh
+  refresh() {
+    window.location.reload();
   }
 
 
