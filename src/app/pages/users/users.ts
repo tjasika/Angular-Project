@@ -28,7 +28,12 @@ export class Users implements OnInit {
       next: () => {
         this.api.fetchData('api/v1/Users').subscribe({
         next: (data) => {
-          this.users = data;
+          const nameRegex = /^[a-zA-z]+$/;
+          this.users = data.filter((user: any) => {
+            const nameExists = user.FirstName && user.LastName;
+            const nameValid = nameRegex.test(user.FirstName) && nameRegex.test(user.LastName);
+            return nameExists && nameValid;
+          });
           this.cdr.detectChanges();
         },
         error: (err) => console.error('Users failed:', err)
