@@ -26,38 +26,28 @@ export class Users implements OnInit {
   ngOnInit() {
     this.api.getToken().subscribe({
       next: () => {
-        this.api.fetchData('api/v1/Users').subscribe({
-        next: (data) => {
-          const nameRegex = /^[a-zA-z]+$/;
-          this.users = data.filter((user: any) => {
-            const nameExists = user.FirstName && user.LastName;
-            const nameValid = nameRegex.test(user.FirstName) && nameRegex.test(user.LastName);
-            return nameExists && nameValid;
-          });
-          this.cdr.detectChanges();
-        },
-        error: (err) => console.error('Users failed:', err)
-      });
+        this.api.getUsers().subscribe({
+          next: () => {
+            this.users = this.api.users;
+            this.cdr.detectChanges();
+          }
+        });
 
-      this.api.fetchData('api/v1/Absences').subscribe({
-        next: (data) => {
-          this.absences = data;
-          this.cdr.detectChanges();
-        },
-        error: (err) => console.error('Absences failed:', err)
-      });
+        this.api.getAbsences().subscribe({
+          next: () => {
+            this.absences = this.api.absences;
+            this.cdr.detectChanges();
+          }
+        });
 
-      this.api.fetchData('api/v1/AbsenceDefinitions').subscribe({
-        next: (data) => {
-          this.absenceDefinitions = data;
-          console.log(this.absenceDefinitions);
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        },
-        error: (err) => console.error('Error fetching absence definitions:', err)
-      })
-    },
-
+        this.api.getAbsenceDefinitions().subscribe({
+          next: () => {
+            this.absenceDefinitions = this.api.absenceDefinitions;
+            this.isLoading = false;
+            this.cdr.detectChanges();
+          }
+        })
+      },
       error: (err) => {
         console.error('Token failed:', err)
         this.isLoading = false;

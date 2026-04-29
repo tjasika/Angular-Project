@@ -9,6 +9,10 @@ import { tap } from 'rxjs/operators';
 export class Api {
   private accessToken = '';
   private tokenReady = false;
+
+  users: any[] = [];
+  absences: any[] = [];
+  absenceDefinitions: any[] = [];
  
   constructor(private http: HttpClient) {}
 
@@ -48,5 +52,44 @@ export class Api {
       'Content-Type': 'application/json'
     })
     return this.http.post<any>(`${baseUrl}/${endpoint}`, body, { headers });
+  }
+
+  getUsers() {
+    return this.fetchData('api/v1/Users').pipe(
+      tap(data => {
+        const nameRegex = /^[a-zA-Z]+$/;
+        this.users = data.filter((user: any) => {
+          const nameExists = user.FirstName && user.LastName;
+          const nameValid = nameRegex.test(user.FirstName) && nameRegex.test(user.LastName);
+          return nameExists && nameValid;
+        });
+      })
+    );
+  }
+
+  getAbsences() {
+    return this.fetchData('api/v1/Absences').pipe(
+      tap(data => {
+        this.absences = data;
+      })
+    );
+  }
+
+  getAbsenceDefinitions() {
+     return this.fetchData('api/v1/AbsenceDefinitions').pipe(
+       tap(data => {
+         this.absenceDefinitions = data;
+         console.log(this.absenceDefinitions);
+       })
+     );
+  }
+
+
+  addUser(user: any) {
+    return this.postData('api/v1/Users', user);
+  }
+
+  addAbsence(absence: any) {
+    return this.postData('api/v1/Absences', absence);
   }
 }
