@@ -59,6 +59,13 @@
               }
             </td>
 
+            <td class="p-3">
+              <button (click)="openAddAbsence(user.Id)" 
+                class="text-xs bg-gray-100 px-2 py-1 rounded-lg hover:bg-primary hover:text-white cursor-pointer">
+                + Absence
+              </button>
+            </td>
+
           </tr>
         }
       </tbody>
@@ -105,12 +112,35 @@
         <input [(ngModel)]="newUser.LastName" name="LastName" placeholder="Last Name" class="border p-2 mb-4 w-full"/>
         <input [(ngModel)]="newUser.Email" name="Email" placeholder="Email" class="border p-2 mb-4 w-full"/>
         <input [(ngModel)]="newUser.BirthDate" type="date" name="BirthDate" placeholder="Date of birth"/>
-
-
         <button type="button" (click)="addUser()">Add user</button>
       </form>
 
       <button (click)="closeAddUser()" class="mt-4 bg-primary text-white px-4 py-2 rounded-lg w-full hover:bg-secondary hover:cursor-pointer">
+        Close
+      </button>
+
+    </div>
+  </div>
+}
+
+@if (showAddAbsence) {
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-96 shadow-xl" (click)="$event.stopPropagation()">
+
+      <h2 class="text-xl font-bold mb-4">Add absence</h2>
+
+      <form>
+        <select [(ngModel)]="newAbsence.AbsenceDefinitionId" name="AbsenceDefinitionId" class="border p-2 mb-4 w-full rounded-lg">
+          <option value="">Select absence type</option>
+          @for(def of absenceDefinitions; track $index) {
+            <option [value]="def.Id">{{def.Name}}</option>
+          }
+        </select>
+        <input [(ngModel)]="newAbsence.Timestamp" name="Timestamp" type="date" class="border p-2 mb-4 w-full rounded-lg"/>
+        <button type="button" (click)="addAbsence()">Add absence</button>
+      </form>
+
+      <button (click)="closeAddAbsence()" class="mt-4 bg-primary text-white px-4 py-2 rounded-lg w-full hover:bg-secondary hover:cursor-pointer">
         Close
       </button>
 
