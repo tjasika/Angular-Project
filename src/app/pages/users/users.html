@@ -31,30 +31,32 @@
           <table class="w-full border-collapse rounded-xl">
           <thead>
             <tr class="bg-secondary text-left h-10">
-              <th class="p-3 rounded-tl-lg cursor-pointer" (click)="toggleSort('FullName')">
+              <th class="p-3 rounded-tl-lg cursor-pointer" (click)="toggleSort('FirstName')">
                 <div class="flex flex-row justify-between items-center">
-                  Full Name
+                  First Name
                   <span class="material-symbols-outlined text-sm">
-                    {{ sortField === 'FullName' && sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                    {{ sortField === 'FirstName' && sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
                   </span>
                 </div>
               </th>
-              <th class="p-3 flex justify-between items-center">
-                First Name
+              <th class="p-3 cursor-pointer" (click)="toggleSort('LastName')">
+                <div class="flex flex-row justify-between items-center">
+                  Last Name
+                  <span class="material-symbols-outlined text-sm">
+                    {{ sortField === 'LastName' && sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                  </span>
+                </div>
               </th>
-              <th class="p-3">
-                Last Name
-              </th>
-              <th class="p-3 rounded-tr-lg">Birth date</th>
+              <th class="p-3 rounded-tr-lg cursor-pointer">Absences</th>
+
             </tr>
           </thead>
           <tbody>
             @for(user of filteredUsers; track $index) {
               <tr class="border-b border-gray-200 hover:bg-gray-50 h-10 text-gray-500">
-                <td class="p-3 font-bold">{{user.FullName}}</td>
-                <td class="p-3">{{user.FirstName + ' ' + user.MiddleName}}</td>
+                <td class="p-3">{{user.MiddleName ? user.FirstName + ' ' + user.MiddleName : user.FirstName}}</td>
                 <td class="p-3">{{user.LastName}}</td>
-                <td class="p-3">{{user.BirthDate}}</td>
+                <td class="p-3">absences go here</td>
               </tr>
             }
           </tbody>
@@ -62,28 +64,7 @@
       } @else if (activeView === 'add') {
         <p>Add user form goes here...</p>
       } @else if (activeView === 'absences') {
-        <table class="w-full border-collapse rounded-xl">
-          <thead>
-            <tr class="bg-secondary text-left h-10">
-              <th class="p-3 rounded-tl-lg cursor-pointer" (click)="toggleSort('FullName')">
-                <div class="flex flex-row justify-between items-center">
-                  Full Name
-                  <span class="material-symbols-outlined text-sm">
-                    {{ sortField === 'FullName' && sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-                  </span>
-                </div>
-              <th class="p-3 rounded-tr-lg">Absences</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for(user of filteredUsers; track $index) {
-              <tr class="border-b border-gray-200 hover:bg-gray-50 h-10 text-gray-500">
-                <td class="p-3 font-bold">{{user.FullName}}</td>
-                <td class="p-3">absences go here</td>
-              </tr>
-            }
-          </tbody>
-        </table>
+        <p>Absences view goes here...</p>
       }
 </div>
 }
