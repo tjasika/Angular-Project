@@ -13,7 +13,7 @@
       <table class="w-full border-collapse rounded-xl">
       <thead>
         <tr class="bg-secondary text-left h-10">
-          <th class="p-3 rounded-tl-lg cursor-pointer" (click)="toggleSort('FirstName')">
+          <th class="p-3 rounded-tl-lg cursor-pointer w-1/4" (click)="toggleSort('FirstName')">
             <div class="flex flex-row justify-between items-center">
               First Name
               <span class="material-symbols-outlined text-sm">
@@ -21,7 +21,7 @@
               </span>
             </div>
           </th>
-          <th class="p-3 cursor-pointer" (click)="toggleSort('LastName')">
+          <th class="p-3 cursor-pointer w-1/4" (click)="toggleSort('LastName')">
             <div class="flex flex-row justify-between items-center">
               Last Name
               <span class="material-symbols-outlined text-sm">
@@ -29,7 +29,7 @@
               </span>
             </div>
           </th>
-          <th class="p-3 rounded-tr-lg cursor-pointer">Absences</th>
+          <th class="p-3 rounded-tr-lg cursor-pointer w-1/2">Absences</th>
 
         </tr>
       </thead>
@@ -39,9 +39,16 @@
             <td class="p-3">{{user.MiddleName ? user.FirstName + ' ' + user.MiddleName : user.FirstName}}</td>
             <td class="p-3">{{user.LastName}}</td>
             <td class="p-3">
-              @for(absence of getUserAbsences(user.Id); track $index) {
+              @for(absence of getVisibleAbsences(user.Id); track $index) {
                 <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs mr-1">
                   {{absence.AbsenceDefinitionName}}
+                </span>
+              }
+              @if(getUserAbsences(user.Id).length > 4) {
+                <span 
+                  (click)="toggleExpand(user.Id)" 
+                  class="bg-gray-200 text-gray-600 px-2 py-1 rounded-full text-xs cursor-pointer hover:bg-gray-300">
+                  {{ isExpanded(user.Id) ? 'Show less' : '...' }}
                 </span>
               }
             </td>

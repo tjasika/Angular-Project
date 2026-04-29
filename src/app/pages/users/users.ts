@@ -48,7 +48,7 @@ export class Users implements OnInit {
     });
 
   }
-  
+
   getUserAbsences(userId: string) {
     return this.absences.filter(a => a.UserId === userId);
   }
@@ -63,18 +63,37 @@ export class Users implements OnInit {
   }
 
   get filteredUsers() {
-  return this.users
-    .filter(user => 
-      user.FirstName?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      user.LastName?.toLowerCase().includes(this.searchQuery.toLowerCase())
-    )
-    .sort((a, b) => {
-      const valA = a[this.sortField] || '';
-      const valB = b[this.sortField] || '';
-      return this.sortDirection === 'asc' 
-        ? valA.localeCompare(valB) 
-        : valB.localeCompare(valA);
-    });
-}
+    return this.users
+      .filter(user => 
+        user.FirstName?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        user.LastName?.toLowerCase().includes(this.searchQuery.toLowerCase())
+      )
+      .sort((a, b) => {
+        const valA = a[this.sortField] || '';
+        const valB = b[this.sortField] || '';
+        return this.sortDirection === 'asc' 
+          ? valA.localeCompare(valB) 
+          : valB.localeCompare(valA);
+      });
+  }
+
+  expandedUsers = new Set<string>();
+
+  toggleExpand(userId: string) {
+    if(this.expandedUsers.has(userId)) {
+      this.expandedUsers.delete(userId);
+    } else {
+      this.expandedUsers.add(userId);
+    }
+  }
+
+  isExpanded(userId: string) {
+    return this.expandedUsers.has(userId);
+  }
+
+  getVisibleAbsences(userId: string) {
+    const absences = this.getUserAbsences(userId);
+    return this.isExpanded(userId) ? absences : absences.slice(0, 4);
+  }
 
 }
