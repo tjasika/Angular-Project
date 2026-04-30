@@ -16,8 +16,9 @@ ng serve --open
 ```
 
 Using Docker:
-On Linux: `sudo docker compose up --build`
-On Windows: `docker compose up --build`
+* On Linux: `sudo docker compose up --build`
+* On Windows: `docker compose up --build`
+  
 Then open `http://localhost:4200`
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
