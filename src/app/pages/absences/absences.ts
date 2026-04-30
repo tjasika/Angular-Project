@@ -14,10 +14,15 @@ export class Absences implements OnInit {
   users: any[] = [];
   absenceDefinitions: any[] = [];
   usersCount = 0;
-  selectedDate = '';
   isLoading = true;
 
   constructor(private api: Api, private cdr: ChangeDetectorRef) {}
+
+  currentDate = new Date();
+
+  get selectedDate() {
+    return this.currentDate.toISOString().split('T')[0];
+  }
 
   ngOnInit() {
     this.api.getToken().subscribe({
@@ -70,6 +75,43 @@ export class Absences implements OnInit {
 
   refresh() {
     window.location.reload();
+  }
+
+  //date methods
+  previousDay() {
+    const d = new Date(this.currentDate);
+    d.setDate(d.getDate() - 1);
+    this.currentDate = d;
+  }
+
+  nextDay() {
+    const d = new Date(this.currentDate);
+    d.setDate(d.getDate() - 1);
+  }
+
+  getDateRow() {
+    return Array.from({length: 7}, (_, i) => {
+      const d = new Date(this.currentDate);
+      d.setDate(d.getDate() - 3 + i);
+      return d;
+    });
+  }
+
+  isToday(date: Date) {
+    const today = new Date();
+    return date.toDateString() === today.toDateString();
+  }
+
+  isSelected(date: Date) {
+    return date.toDateString() === this.currentDate.toDateString();
+  }
+
+  selectDate(date: Date) {
+    this.currentDate = date;
+  }
+
+  toDate(dateString: string) {
+    return new Date(dateString);
   }
 
 }

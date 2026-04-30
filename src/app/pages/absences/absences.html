@@ -11,9 +11,31 @@
         </span>
     </div>
 
-    <div>
-      <input type="date" [(ngModel)]="selectedDate" name="selectedDate" class="border border-gray-500 p-2 mt-4 rounded-lg cursor-pointer"/>
-      <span>{{getUsersCount()}} results found.</span>
+    <div class="flex items-center gap-2 mt-4 w-full">
+      <span class="material-symbols-outlined cursor-pointer hover:text-primary" (click)="previousDay()">
+        chevron_left
+      </span>
+
+      <div class="w-full flex flex-row justify-between border-1 border-gray-200 rounded-md">
+        @for (date of getDateRow(); track $index) {
+          <div
+          (click)="selectDate(date)"
+          class="flex flex-col items-center px-3 py-2 cursor-pointer min-w-1/8 rounded-md"
+          [class.bg-primary]="isSelected(date)"
+          [class.text-white]="isSelected(date)">
+          <span class="text-xs">{{ isToday(date) ? 'Today' : (date | date:'EEE') }}</span>
+          <span class="font-bold">{{ date | date:'d' }}</span>
+
+          </div>
+        }
+      </div>
+
+       <span class="material-symbols-outlined cursor-pointer hover:text-primary" (click)="nextDay()">
+          chevron_right
+        </span>
+
+        <!-- Custom date picker -->
+        <input type="date" [ngModel]="selectedDate" (ngModelChange)="currentDate = toDate($event)" name="customDate" class="border border-gray-300 p-2 rounded-lg cursor-pointer ml-2"/>
     </div>
   </div>
 
