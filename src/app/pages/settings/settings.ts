@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-settings',
@@ -13,6 +14,9 @@ export class Settings {
   tokenUrl = 'https://login.spica.com/connect/token';
   baseUrl = 'https://api4.allhours.com/';
 
+  constructor(private router: Router) {}
+
+
   ngOnInit() {
     this.clientId = localStorage.getItem('clientId') || '';
     this.clientSecret = localStorage.getItem('clientSecret') || '';
@@ -24,5 +28,6 @@ export class Settings {
     localStorage.setItem('tokenUrl', this.tokenUrl);
     localStorage.setItem('baseUrl', this.baseUrl);
     alert('Settings saved!');
+    this.router.navigate(['/users']);  
   }
 }
