@@ -79,7 +79,6 @@ export class Api {
      return this.fetchData('api/v1/AbsenceDefinitions').pipe(
        tap(data => {
          this.absenceDefinitions = data;
-         console.log(this.absenceDefinitions);
        })
      );
   }
