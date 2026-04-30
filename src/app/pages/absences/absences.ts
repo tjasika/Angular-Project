@@ -13,6 +13,7 @@ export class Absences implements OnInit {
   absences: any[] = [];
   users: any[] = [];
   absenceDefinitions: any[] = [];
+  usersCount = 0;
   selectedDate = '';
   isLoading = true;
 
@@ -54,6 +55,12 @@ export class Absences implements OnInit {
       const to = new Date(a.PartialTimeTo);
       return a.UserId === userId && selected >= from && selected <= to;
     });
+  }
+
+  getUsersCount() {
+    if(!this.selectedDate) return 0;
+    const selected = new Date(this.selectedDate);
+    return this.users.filter(u => this.getUserAbsences(u.Id).length > 0).length;
   }
 
   get filteredUsers() {

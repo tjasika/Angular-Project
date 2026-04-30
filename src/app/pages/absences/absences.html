@@ -10,7 +10,11 @@
           refresh
         </span>
     </div>
-    <input type="date" [(ngModel)]="selectedDate" name="selectedDate" class="border border-gray-500 p-2 mt-4 rounded-lg cursor-pointer"/>
+
+    <div>
+      <input type="date" [(ngModel)]="selectedDate" name="selectedDate" class="border border-gray-500 p-2 mt-4 rounded-lg cursor-pointer"/>
+      <span>{{getUsersCount()}} results found.</span>
+    </div>
   </div>
 
   <div class="flex-1 overflow-auto">
