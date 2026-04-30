@@ -10,14 +10,12 @@ import { FormsModule } from '@angular/forms';
 export class Settings {
   clientId = '';
   clientSecret = '';
-  tokenUrl = '';
-  baseUrl = '';
+  tokenUrl = 'https://login.spica.com/connect/token';
+  baseUrl = 'https://api4.allhours.com/';
 
   ngOnInit() {
     this.clientId = localStorage.getItem('clientId') || '';
     this.clientSecret = localStorage.getItem('clientSecret') || '';
-    this.tokenUrl = localStorage.getItem('tokenUrl') || '';
-    this.baseUrl = localStorage.getItem('baseUrl') || '';
   }
 
   saveSettings() {
