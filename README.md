@@ -25,6 +25,7 @@ Wait a couple of minutes, then open `http://localhost:4200` - first time users w
 
 ### Possible improvements
 * Add pagination for large user lists
+* Add modals to the absences page
 * Add form validation when adding users and absences
 
 ### Notes
